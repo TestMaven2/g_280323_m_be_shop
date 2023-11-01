@@ -6,6 +6,7 @@ import de.telran.g_280323_m_be_shop.repository.common.CommonCustomerRepository;
 import de.telran.g_280323_m_be_shop.repository.common.CommonProductRepository;
 import de.telran.g_280323_m_be_shop.repository.interfaces.CustomerRepository;
 import de.telran.g_280323_m_be_shop.repository.interfaces.ProductRepository;
+import de.telran.g_280323_m_be_shop.repository.mysql.MySqlProductRepository;
 import de.telran.g_280323_m_be_shop.service.common.CommonCustomerService;
 import de.telran.g_280323_m_be_shop.service.common.CommonProductService;
 import de.telran.g_280323_m_be_shop.service.interfaces.CustomerService;
@@ -23,7 +24,7 @@ public class AppConfig {
 
     @Bean
     public ProductRepository productRepository() {
-        return new CommonProductRepository();
+        return new MySqlProductRepository();
     }
 
     @Bean

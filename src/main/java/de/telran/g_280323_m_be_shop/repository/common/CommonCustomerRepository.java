@@ -1,5 +1,6 @@
 package de.telran.g_280323_m_be_shop.repository.common;
 
+import de.telran.g_280323_m_be_shop.domain.database.common.CommonDatabase;
 import de.telran.g_280323_m_be_shop.domain.database.interfaces.Database;
 import de.telran.g_280323_m_be_shop.domain.entity.interfaces.Customer;
 import de.telran.g_280323_m_be_shop.domain.entity.interfaces.Product;
