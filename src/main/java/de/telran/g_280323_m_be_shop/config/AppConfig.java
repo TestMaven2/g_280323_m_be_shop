@@ -16,28 +16,28 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class AppConfig {
 
-    @Bean
-    public Database database() {
-        return new CommonDatabase();
-    }
-
-    @Bean
-    public ProductRepository productRepository() {
-        return new MySqlProductRepository();
-    }
-
-    @Bean
-    public CustomerRepository customerRepository() {
-        return new MySqlCustomerRepository();
-    }
-
-    @Bean
-    public ProductService productService() {
-        return new CommonProductService();
-    }
-
-    @Bean
-    public CustomerService customerService() {
-        return new CommonCustomerService();
-    }
+//    @Bean
+//    public Database database() {
+//        return new CommonDatabase();
+//    }
+//
+//    @Bean
+//    public ProductRepository productRepository() {
+//        return new MySqlProductRepository();
+//    }
+//
+//    @Bean
+//    public CustomerRepository customerRepository() {
+//        return new MySqlCustomerRepository();
+//    }
+//
+//    @Bean
+//    public ProductService productService() {
+//        return new CommonProductService();
+//    }
+//
+//    @Bean
+//    public CustomerService customerService() {
+//        return new CommonCustomerService();
+//    }
 }
