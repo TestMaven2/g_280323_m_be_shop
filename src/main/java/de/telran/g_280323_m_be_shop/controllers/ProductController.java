@@ -2,8 +2,15 @@ package de.telran.g_280323_m_be_shop.controllers;
 
 import de.telran.g_280323_m_be_shop.domain.entity.common.CommonProduct;
 import de.telran.g_280323_m_be_shop.domain.entity.interfaces.Product;
+import de.telran.g_280323_m_be_shop.exception_handling.Response;
+import de.telran.g_280323_m_be_shop.exception_handling.exceptions.EntityValidationException;
+import de.telran.g_280323_m_be_shop.exception_handling.exceptions.FirstTestException;
+import de.telran.g_280323_m_be_shop.exception_handling.exceptions.SecondTestException;
+import de.telran.g_280323_m_be_shop.exception_handling.exceptions.ThirdTestException;
 import de.telran.g_280323_m_be_shop.service.interfaces.ProductService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -52,8 +59,23 @@ public class ProductController {
      * @return          объект сохраняемого продукта в случае успешного сохранения.
      */
     @PostMapping
-    public Product add(@RequestBody CommonProduct product) {
-        service.add(product);
+    public Product add(@RequestBody @Valid CommonProduct product) {
+        if ("Test".equals(product.getName())) {
+            throw new FirstTestException("Incorrect product name!");
+        }
+        if ("Test1".equals(product.getName())) {
+            throw new SecondTestException("Another incorrect name!");
+        }
+        if ("Test2".equals(product.getName())) {
+            throw new ThirdTestException("Message from third exception!");
+        }
+
+        try {
+            service.add(product);
+        } catch (Exception e) {
+            throw new EntityValidationException(e.getMessage());
+        }
+
         return product;
     }
 
@@ -105,5 +127,21 @@ public class ProductController {
     @GetMapping("/average")
     public double getAverage() {
         return service.getAveragePrice();
+    }
+
+    // 1 способ обработки ошибок
+    // Такой метод нужно прописывать в каждом классе,
+    // где мы хотим обрабатывать данную ошибку.
+    // Либо мы можем унаследовать все контроллеры
+    // от общего родителя и прописать этот обработчик в родителе,
+    // но это не всегда удобно и возможно, если у вас
+    // достаточно сложная структура контроллеров,
+    // и это не было предусмотрено заранее.
+    // Плюс в том, что данный способ позволяет
+    // обрабатывать ошибки в разных классах по-разному.
+    @ExceptionHandler(FirstTestException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public Response handleException(FirstTestException e) {
+        return new Response(e.getMessage());
     }
 }

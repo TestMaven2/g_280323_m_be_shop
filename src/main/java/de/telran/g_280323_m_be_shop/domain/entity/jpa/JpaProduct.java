@@ -2,6 +2,7 @@ package de.telran.g_280323_m_be_shop.domain.entity.jpa;
 
 import de.telran.g_280323_m_be_shop.domain.entity.interfaces.Product;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 
 @Entity
 @Table(name = "product")
@@ -12,10 +13,20 @@ public class JpaProduct implements Product {
     @Column(name = "product_id")
     private int id;
 
+    // Test - OK
+    // Te - X
+    // TEST - X
+    // TEst - X
+    // test - X
     @Column(name = "name")
+//    @NotNull
+//    @NotBlank
+    @Pattern(regexp = "[A-Z][a-z]{2,}")
     private String name;
 
     @Column(name = "price")
+    @Min(value = 5)
+    @Max(value = 99999)
     private double price;
 
     public JpaProduct() {
