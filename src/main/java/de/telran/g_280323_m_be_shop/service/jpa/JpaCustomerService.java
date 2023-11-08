@@ -81,7 +81,7 @@ public class JpaCustomerService implements CustomerService {
     @Transactional
     @Override
     public void deleteFromCartById(int customerId, int productId) {
-        ((JpaCart) getById(customerId).getCart()).deleteProduct(productId);
+        getById(customerId).getCart().deleteProduct(productId);
     }
 
     @Transactional
