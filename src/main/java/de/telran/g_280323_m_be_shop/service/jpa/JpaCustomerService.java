@@ -66,8 +66,7 @@ public class JpaCustomerService implements CustomerService {
 
     @Override
     public double getAveragePriceById(int id) {
-        Cart cart = getById(id).getCart();
-        return cart.getTotalPrice() / cart.getProducts().size();
+        return getById(id).getCart().getAveragePrice();
     }
 
     @Transactional
