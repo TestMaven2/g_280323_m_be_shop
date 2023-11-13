@@ -10,6 +10,8 @@ import de.telran.g_280323_m_be_shop.repository.jpa.JpaCustomerRepository;
 import de.telran.g_280323_m_be_shop.repository.jpa.JpaProductRepository;
 import de.telran.g_280323_m_be_shop.service.interfaces.CustomerService;
 import jakarta.transaction.Transactional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -17,6 +19,8 @@ import java.util.List;
 
 @Service
 public class JpaCustomerService implements CustomerService {
+
+    private final Logger LOGGER = LoggerFactory.getLogger(JpaCustomerService.class);
 
     private JpaCustomerRepository repository;
     private JpaCartRepository cartRepository;
@@ -35,6 +39,10 @@ public class JpaCustomerService implements CustomerService {
 
     @Override
     public Customer getById(int id) {
+        LOGGER.info("Запрошен покупатель с идентификатором {}.", id);
+        LOGGER.warn("Запрошен покупатель с идентификатором {}.", id);
+        LOGGER.error("Запрошен покупатель с идентификатором {}.", id);
+
         return repository.findById(id).orElse(null);
     }
 
