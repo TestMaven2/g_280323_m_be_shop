@@ -3,7 +3,9 @@ package de.telran.g_280323_m_be_shop.service.jpa;
 import de.telran.g_280323_m_be_shop.domain.entity.common.CommonProduct;
 import de.telran.g_280323_m_be_shop.domain.entity.interfaces.Product;
 import de.telran.g_280323_m_be_shop.domain.entity.jpa.JpaProduct;
+import de.telran.g_280323_m_be_shop.domain.entity.jpa.Task;
 import de.telran.g_280323_m_be_shop.repository.jpa.JpaProductRepository;
+import de.telran.g_280323_m_be_shop.schedule.ScheduleExecutor;
 import de.telran.g_280323_m_be_shop.service.interfaces.ProductService;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -19,13 +21,17 @@ public class JpaProductService implements ProductService {
     private final Logger LOGGER = LogManager.getLogger(JpaProductService.class);
 
     private JpaProductRepository repository;
+    private TaskService taskService;
 
-    public JpaProductService(JpaProductRepository repository) {
+    public JpaProductService(JpaProductRepository repository, TaskService taskService) {
         this.repository = repository;
+        this.taskService = taskService;
     }
 
     @Override
     public List<Product> getAll() {
+        Task task = taskService.createTask("Запрошен список всех продуктов");
+        ScheduleExecutor.executeScheduledTask(task);
         return new ArrayList<>(repository.findAll());
     }
 
@@ -57,6 +63,9 @@ public class JpaProductService implements ProductService {
 
     @Override
     public void deleteById(int id) {
+        Task task = taskService.createTask("Попытка удаления продукта с ИД " + id);
+        LOGGER.info("Вызван метод deleteById");
+        ScheduleExecutor.executeScheduledTaskOnce(task);
         repository.deleteById(id);
     }
 

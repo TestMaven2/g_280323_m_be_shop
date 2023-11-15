@@ -55,4 +55,12 @@ public class AspectLogging {
             throw new RuntimeException(e);
         }
     }
+
+    @Pointcut("execution(* de.telran.g_280323_m_be_shop.service.jpa..*(..))")
+    public void allClassesInPackage() {}
+
+    @Before("allClassesInPackage()")
+    public void logForAllClassesInPackage() {
+        LOGGER.info("Вызван какой-то метод какого-то сервиса.");
+    }
 }
