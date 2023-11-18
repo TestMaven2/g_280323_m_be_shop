@@ -15,7 +15,7 @@ public class JpaCustomer implements Customer {
     @Column(name = "name")
     private String name;
 
-    @OneToOne(mappedBy = "customer")
+    @OneToOne(mappedBy = "customer", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private JpaCart cart;
 
     public JpaCustomer() {
